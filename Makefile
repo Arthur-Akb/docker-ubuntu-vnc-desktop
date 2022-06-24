@@ -2,7 +2,7 @@
 
 # Default values for variables
 REPO  ?= dorowu/ubuntu-desktop-lxde-vnc
-TAG   ?= latest
+TAG   ?= proteus
 # you can choose other base image versions
 IMAGE ?= ubuntu:20.04
 # IMAGE ?= nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
@@ -10,13 +10,36 @@ IMAGE ?= ubuntu:20.04
 FLAVOR ?= lxde
 # armhf or amd64
 ARCH ?= amd64
+# Proteus repo and branch
+PROTEUS ?= -b master https://github.com/ProteusMRIgHIFU/Proteus
 
 # These files will be generated from teh Jinja templates (.j2 sources)
 templates = Dockerfile rootfs/etc/supervisor/conf.d/supervisord.conf
 
+# Run Proteus
+proteus:
+	sudo chown -R :1002 ..
+	sudo chmod 775 ..
+	sudo chmod g+s ..
+	docker run --privileged --rm \
+		-p 6080:80 -p 6081:443 \
+		-v ${PWD}:/src:ro \
+		-e ALSADEV=hw:2,0 \
+		-e USER=proteus -e PASSWORD=proteus \
+		-e SSL_PORT=443 \
+		-e RELATIVE_URL_ROOT=approot \
+        -e RESOLUTION=1920x1080 \
+		-v ${PWD}/ssl:/etc/nginx/ssl \
+        -v ~/Documents/GitHub:/home/proteus/Desktop/GitHub \
+		--device /dev/snd \
+		--name proteus \
+		$(REPO):$(TAG)
+
 # Rebuild the container image
 build: $(templates)
-	docker build -t $(REPO):$(TAG) .
+	docker build -t $(REPO):$(TAG) \
+        --build-arg USER_ID=1002 \
+        --build-arg GROUP_ID=1002 .
 
 # Test run the container
 # the local dir will be mounted under /src read-only
