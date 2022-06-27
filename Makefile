@@ -16,11 +16,10 @@ PROTEUS ?= -b master https://github.com/ProteusMRIgHIFU/Proteus
 # These files will be generated from teh Jinja templates (.j2 sources)
 templates = Dockerfile rootfs/etc/supervisor/conf.d/supervisord.conf
 
+# sudo chown -R :1002 .
+
 # Run Proteus
 proteus:
-	sudo chown -R :1002 ..
-	sudo chmod 775 ..
-	sudo chmod g+s ..
 	docker run --privileged --rm \
 		-p 6080:80 -p 6081:443 \
 		-v ${PWD}:/src:ro \
