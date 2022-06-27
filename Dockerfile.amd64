@@ -88,9 +88,8 @@ RUN adduser proteus sudo
 #USER proteus
 
 # Proteus dependencies
-RUN mkdir -p /home/proteus/Desktop/GitHub \
-    && chown -R :1002 /home/proteus/Desktop/GitHub
 COPY softwarereqs /home/proteus/Desktop/softwarereqs
+COPY proteus-launch.sh /home/proteus/Desktop
 RUN apt-get update \
     && apt-get install -y gcc \
                           python3-vtk7 \

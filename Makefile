@@ -29,7 +29,7 @@ proteus:
 		-e RELATIVE_URL_ROOT=approot \
         -e RESOLUTION=1920x1080 \
 		-v ${PWD}/ssl:/etc/nginx/ssl \
-        -v ~/Documents/GitHub:/home/proteus/Desktop/GitHub \
+		--mount "type=bind,src=${PWD}/..,dst=/home/proteus/Desktop/GitHub" \
 		--device /dev/snd \
 		--name proteus \
 		$(REPO):$(TAG)
