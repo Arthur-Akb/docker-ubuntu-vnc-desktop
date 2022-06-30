@@ -1,8 +1,8 @@
 .PHONY: build run
 
 # Default values for variables
-REPO  ?= akbulatov/ubuntu-desktop-lxde-vnc
-TAG   ?= proteus
+REPO  ?= akbulatov/proteus_docker_vnc_image
+TAG   ?= latest
 # you can choose other base image versions
 IMAGE ?= ubuntu:20.04
 # IMAGE ?= nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
@@ -21,7 +21,7 @@ templates = Dockerfile rootfs/etc/supervisor/conf.d/supervisord.conf
 # Run Proteus
 proteus:
 	docker run --privileged \
-		-p 6080:80 -p 6081:443 \
+		-p 6080:80 -p 6081:443 -p 5900:59000 \
 		-v ${PWD}:/src:ro \
 		-e ALSADEV=hw:2,0 \
 		-e USER=proteus -e PASSWORD=proteus \
