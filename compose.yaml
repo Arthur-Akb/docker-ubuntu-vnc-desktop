@@ -1,8 +1,8 @@
 services:
   proteus:
     container_name: proteus
-    image: akbulatov/proteus_docker_vnc_image:latest
-    ports: 
+    image: docker.io/akbulatov/proteus_docker_vnc_image:latest
+    ports:
       - "6080:80"
       - "5900:5900"
       - "8168:8168"
@@ -23,5 +23,3 @@ services:
       - type: bind
         source: ../XTC_binaries
         target: /home/proteus/Desktop/XTC_binaries
-
-
