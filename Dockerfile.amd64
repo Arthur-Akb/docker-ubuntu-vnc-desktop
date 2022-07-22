@@ -78,14 +78,16 @@ RUN apt-get update \
     && rm -rf /var/cache/apt/* /tmp/a.txt /tmp/b.txt
 
 # Create user
-ARG USER_ID
-ARG GROUP_ID
-RUN addgroup --gid $GROUP_ID proteus
-RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID proteus
+RUN addgroup --gid 1002 proteus
+RUN adduser --disabled-password --gecos '' --uid 1002 --gid 1002 proteus
 RUN adduser proteus sudo
 #RUN adduser proteus $GROUP_ID
 #RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 #USER proteus
+
+# Set time zone
+RUN apt update && apt install tzdata -y
+ENV TZ="America/New_York"
 
 # Proteus dependencies
 COPY softwarereqs /home/proteus/Desktop/softwarereqs

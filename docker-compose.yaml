@@ -1,0 +1,27 @@
+services:
+  proteus:
+    container_name: proteus
+    image: akbulatov/proteus_docker_vnc_image:latest
+    ports: 
+      - "6080:80"
+      - "5900:5900"
+      - "8168:8168"
+    environment:
+      - USER=proteus
+      - PASSWORD=proteus
+      - RESOLUTION=1920x1200
+    volumes:
+      - type: bind
+        source: ../Proteus
+        target: /home/proteus/Desktop/Proteus
+      - type: bind
+        source: ../Config
+        target: /home/proteus/Desktop/Config
+      - type: bind
+        source: ../pyHIFU_Sonalleve
+        target: /home/proteus/Desktop/pyHIFU_Sonalleve
+      - type: bind
+        source: ../XTC_binaries
+        target: /home/proteus/Desktop/XTC_binaries
+
+

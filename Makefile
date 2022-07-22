@@ -21,7 +21,7 @@ templates = Dockerfile rootfs/etc/supervisor/conf.d/supervisord.conf
 # Run Proteus
 proteus:
 	docker run --privileged \
-		-p 6080:80 -p 6081:443 -p 5900:59000 \
+		-p 6080:80 -p 6081:443 -p 5900:5900 \
 		-v ${PWD}:/src:ro \
 		-e ALSADEV=hw:2,0 \
 		-e USER=proteus -e PASSWORD=proteus \
